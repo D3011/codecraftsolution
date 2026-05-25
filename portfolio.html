@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfolio — CodeCraft Solutions</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,700&family=UnifrakturMaguntia&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+.portfolio-page{padding:3rem 4%;position:relative;z-index:1;}
+/* CASE STUDY CARDS */
+.case-study{display:grid;grid-template-columns:1fr 1.5fr;gap:0;border:1px solid var(--ink);margin-bottom:2.5rem;}
+.case-study:nth-child(even){grid-template-columns:1.5fr 1fr;}
+.case-study:nth-child(even) .cs-preview{order:2;}.case-study:nth-child(even) .cs-content{order:1;}
+.cs-preview{position:relative;min-height:280px;overflow:hidden;border-right:1px solid var(--ink);}
+.cs-preview-inner{width:100%;height:100%;display:flex;align-items:center;justify-content:center;}
+.cs-preview::after{content:'';position:absolute;inset:0;background-image:radial-gradient(circle,rgba(26,18,8,.07) 1px,transparent 1px);background-size:4px 4px;pointer-events:none;}
+.cs-content{padding:2.2rem;}
+.cs-tag{font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.18em;color:var(--red);margin-bottom:.5rem;display:block;}
+.cs-headline{font-family:var(--serif-display);font-size:1.6rem;font-weight:900;line-height:1.1;margin-bottom:.7rem;}
+.cs-deck{font-size:.85rem;color:var(--ink-mid);line-height:1.85;margin-bottom:1.2rem;text-align:justify;hyphens:auto;}
+.cs-deck::first-letter{font-family:var(--serif-display);font-size:2.8rem;font-weight:900;color:var(--red);float:left;line-height:.82;margin:.06em .12em 0 0;}
+.cs-meta{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin-bottom:1.2rem;padding:.8rem;background:var(--cream-deep);border:1px solid var(--rule-thin);}
+.cs-meta-item span{display:block;font-size:.63rem;text-transform:uppercase;letter-spacing:.12em;color:var(--ink-light);}
+.cs-meta-item strong{font-size:.82rem;color:var(--ink);}
+.cs-chips{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.8rem;}
+.cs-chip{font-size:.65rem;text-transform:uppercase;letter-spacing:.1em;font-weight:700;color:var(--ink);padding:.18rem .6rem;border:1px solid var(--ink);}
+.cs-result{background:var(--ink);color:var(--cream);padding:.8rem 1.2rem;margin-top:1rem;}
+.cs-result-label{font-size:.62rem;text-transform:uppercase;letter-spacing:.12em;color:var(--gold-light);display:block;margin-bottom:.3rem;}
+.cs-result-text{font-family:var(--serif-display);font-style:italic;font-size:.95rem;font-weight:700;}
+/* MINI GRID (extra work) */
+.mini-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid var(--ink);margin-bottom:3rem;}
+.mini-card{padding:1.5rem;border-right:1px solid var(--ink);border-bottom:1px solid var(--ink);transition:background .2s;}
+.mini-card:nth-child(3n){border-right:none;}
+.mini-card:hover{background:rgba(192,57,43,.04);}
+.mini-preview{width:100%;height:120px;overflow:hidden;margin-bottom:1rem;border:1px solid var(--rule-thin);position:relative;}
+.mini-preview::after{content:'';position:absolute;inset:0;background-image:radial-gradient(circle,rgba(26,18,8,.07) 1px,transparent 1px);background-size:4px 4px;pointer-events:none;}
+.mini-tag{font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:var(--red);display:block;margin-bottom:.3rem;}
+.mini-headline{font-family:var(--serif-display);font-size:.95rem;font-weight:700;line-height:1.2;margin-bottom:.4rem;}
+.mini-body{font-size:.75rem;color:var(--ink-mid);line-height:1.7;}
+/* CTA */
+.portfolio-cta{background:var(--ink);padding:3rem 4%;text-align:center;border-top:3px double var(--red);}
+.portfolio-cta h2{font-family:var(--serif-display);font-size:clamp(1.6rem,3.5vw,2.5rem);font-weight:900;color:var(--cream);margin-bottom:.8rem;}
+.portfolio-cta h2 em{color:var(--red-light);font-style:italic;}
+.portfolio-cta p{font-style:italic;color:rgba(245,240,232,.6);font-size:.9rem;margin-bottom:1.5rem;}
+.portfolio-cta-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;}
+@media(max-width:768px){
+  .case-study,.case-study:nth-child(even){grid-template-columns:1fr;}
+  .cs-preview{min-height:200px;border-right:none;border-bottom:1px solid var(--ink);}
+  .case-study:nth-child(even) .cs-preview{order:1;}.case-study:nth-child(even) .cs-content{order:2;}
+  .mini-grid{grid-template-columns:1fr;}
+  .mini-card{border-right:none;}
+}
+</style>
+</head>
+<body>
+<div id="progress"></div>
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-close" id="mobileClose">✕</button>
+  <a href="index.html">Home</a><a href="services.html">Services</a>
+  <a href="packages.html">Packages</a><a href="portfolio.html" class="active">Portfolio</a><a href="contact.html">Contact</a>
+</div>
+<header class="masthead">
+  <div class="masthead-top">
+    <span>Est. 2024 · Erode, Tamil Nadu</span>
+    <span><a href="mailto:codecraftsolutionerode@gmail.com">codecraftsolutionerode@gmail.com</a></span>
+    <span>Vol. I · Portfolio Chronicle</span>
+  </div>
+  <a href="index.html" class="masthead-logo">CodeCraft<span>Solutions</span></a>
+  <div class="masthead-tagline">"All the Web Fit to Build" — Modern Websites for Tamil Nadu Businesses</div>
+  <div class="masthead-rule"></div>
+  <nav class="masthead-nav">
+    <a href="index.html">Home</a><a href="services.html">Services</a>
+    <a href="packages.html">Packages</a><a href="portfolio.html" class="active">Portfolio</a><a href="contact.html">Contact</a>
+    <a href="contact.html" class="nav-cta">✦ Free Demo</a>
+  </nav>
+</header>
+<nav class="sticky-nav">
+  <a href="index.html" class="sticky-nav-logo">CodeCraft<span>Solutions</span></a>
+  <ul class="sticky-nav-links">
+    <li><a href="index.html">Home</a></li><li><a href="services.html">Services</a></li>
+    <li><a href="packages.html">Packages</a></li><li><a href="portfolio.html" class="active">Portfolio</a></li><li><a href="contact.html">Contact</a></li>
+  </ul>
+  <a href="contact.html" class="sticky-btn">Free Demo</a>
+  <button class="nav-burger" onclick="openMobile()"><span></span><span></span><span></span></button>
+</nav>
+<div class="ticker-wrap">
+  <span class="ticker-label">PORTFOLIO</span>
+  <div class="ticker-inner" style="padding-left:140px">
+    <span>10+ websites delivered</span><span>Restaurants · Salons · Gyms · Travel</span>
+    <span>Every site mobile-first &amp; SEO-ready</span><span>Average 3-day delivery</span>
+    <span>5.0 star client satisfaction</span>
+  </div>
+</div>
+<div class="page-banner">
+  <span class="page-banner-kicker">— Our Work —</span>
+  <h1 class="page-banner-title">The Portfolio<br><em>Chronicle</em></h1>
+  <div class="page-banner-rule"><span></span><i>❧</i><span></span></div>
+  <p class="page-banner-deck">Real projects for real businesses. Every site is custom-built, mobile-first, and designed to convert visitors into paying customers.</p>
+</div>
+
+<main class="portfolio-page">
+  <div class="section-masthead reveal"><span class="section-kicker">— Feature Stories —</span><h2 class="section-title">Case <em>Studies</em></h2><p class="section-deck">An in-depth look at four projects that show what we build and why it works.</p></div>
+
+  <!-- Case Study 1: Salon -->
+  <div class="case-study reveal">
+    <div class="cs-preview">
+      <div class="cs-preview-inner" style="background:linear-gradient(135deg,#f5e6f0,#e8c8e0)">
+        <svg viewBox="0 0 360 280" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%">
+          <rect width="360" height="280" fill="#f5e6f0"/>
+          <rect x="0" y="0" width="360" height="24" fill="#c97ab2"/>
+          <rect x="14" y="8" width="55" height="8" rx="2" fill="rgba(255,255,255,.75)"/>
+          <rect x="250" y="8" width="32" height="8" rx="2" fill="rgba(255,255,255,.5)"/>
+          <rect x="288" y="8" width="32" height="8" rx="2" fill="rgba(255,255,255,.5)"/>
+          <rect x="326" y="7" width="22" height="10" rx="2" fill="#fff" opacity=".9"/>
+          <rect x="0" y="24" width="360" height="90" fill="#e8c8e0"/>
+          <text x="180" y="72" text-anchor="middle" font-family="Georgia,serif" font-size="18" font-weight="700" fill="#7a3a6a" opacity=".85">Luxury Salon &amp; Spa</text>
+          <text x="180" y="92" text-anchor="middle" font-family="Georgia,serif" font-size="9" fill="#9a5a8a" opacity=".75">Book Your Appointment Today</text>
+          <rect x="135" y="100" width="90" height="14" rx="6" fill="#c97ab2"/>
+          <text x="180" y="110" text-anchor="middle" font-family="Georgia,serif" font-size="7" fill="#fff">Book Now</text>
+          <rect x="14" y="125" width="100" height="55" rx="3" fill="#fff" opacity=".75"/>
+          <rect x="14" y="125" width="100" height="12" rx="3" fill="#e8c8e0"/>
+          <text x="64" y="135" text-anchor="middle" font-family="Georgia,serif" font-size="7" fill="#7a3a6a">Hair Services</text>
+          <rect x="20" y="142" width="55" height="5" rx="1" fill="#e8c8e0" opacity=".8"/>
+          <rect x="20" y="151" width="75" height="5" rx="1" fill="#e8c8e0" opacity=".6"/>
+          <rect x="20" y="160" width="65" height="5" rx="1" fill="#e8c8e0" opacity=".6"/>
+          <rect x="130" y="125" width="100" height="55" rx="3" fill="#fff" opacity=".75"/>
+          <rect x="130" y="125" width="100" height="12" rx="3" fill="#e8c8e0"/>
+          <text x="180" y="135" text-anchor="middle" font-family="Georgia,serif" font-size="7" fill="#7a3a6a">Skin &amp; Beauty</text>
+          <rect x="136" y="142" width="55" height="5" rx="1" fill="#e8c8e0" opacity=".8"/>
+          <rect x="136" y="151" width="75" height="5" rx="1" fill="#e8c8e0" opacity=".6"/>
+          <rect x="136" y="160" width="65" height="5" rx="1" fill="#e8c8e0" opacity=".6"/>
+          <rect x="246" y="125" width="100" height="55" rx="3" fill="#fff" opacity=".75"/>
+          <rect x="246" y="125" width="100" height="12" rx="3" fill="#e8c8e0"/>
+          <text x="296" y="135" text-anchor="middle" font-family="Georgia,serif" font-size="7" fill="#7a3a6a">Nail Art</text>
+          <rect x="252" y="142" width="55" height="5" rx="1" fill="#e8c8e0" opacity=".8"/>
+          <rect x="252" y="151" width="75" height="5" rx="1" fill="#e8c8e0" opacity=".6"/>
+          <rect x="252" y="160" width="65" height="5" rx="1" fill="#e8c8e0" opacity=".6"/>
+          <rect x="14" y="195" width="330" height="35" rx="3" fill="#c97ab2" opacity=".15"/>
+          <rect x="30" y="202" width="80" height="6" rx="2" fill="#c97ab2" opacity=".4"/>
+          <rect x="30" y="213" width="200" height="5" rx="2" fill="#c97ab2" opacity=".25"/>
+          <rect x="0" y="255" width="360" height="25" fill="#c97ab2" opacity=".4"/>
+          <rect x="120" y="263" width="120" height="5" rx="2" fill="#7a3a6a" opacity=".4"/>
+        </svg>
+      </div>
+    </div>
+    <div class="cs-content">
+      <span class="cs-tag">Beauty &amp; Salon</span>
+      <h2 class="cs-headline">Luxury Salon Website</h2>
+      <p class="cs-deck">The client ran a well-established beauty salon in Erode with a loyal customer base, but no online presence at all. New customers couldn't find them on Google, and appointment bookings were entirely by word of mouth. We built a stunning five-page website featuring a full service menu, an online booking form, a photo gallery, and a testimonials section — live in four days.</p>
+      <div class="cs-meta">
+        <div class="cs-meta-item"><span>Package</span><strong>Business — ₹9,000</strong></div>
+        <div class="cs-meta-item"><span>Delivery</span><strong>4 Days</strong></div>
+        <div class="cs-meta-item"><span>Industry</span><strong>Beauty &amp; Salon</strong></div>
+        <div class="cs-meta-item"><span>Key Feature</span><strong>Online Booking</strong></div>
+      </div>
+      <div class="cs-chips"><span class="cs-chip">Booking Form</span><span class="cs-chip">Gallery</span><span class="cs-chip">Service Menu</span><span class="cs-chip">SEO</span></div>
+      <div class="cs-result"><span class="cs-result-label">Client Result</span><p class="cs-result-text">"15 new appointments booked online in the first week alone."</p></div>
+    </div>
+  </div>
+
+  <!-- Case Study 2: Restaurant -->
+  <div class="case-study reveal">
+    <div class="cs-preview">
+      <div class="cs-preview-inner" style="background:linear-gradient(135deg,#f5ede0,#e8d0b0)">
+        <svg viewBox="0 0 360 280" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%">
+          <rect width="360" height="280" fill="#f5ede0"/>
+          <rect x="0" y="0" width="360" height="24" fill="#8b4513"/>
+          <rect x="14" y="8" width="60" height="8" rx="2" fill="rgba(255,220,150,.8)"/>
+          <rect x="240" y="8" width="30" height="8" rx="2" fill="rgba(255,220,150,.5)"/>
+          <rect x="276" y="8" width="30" height="8" rx="2" fill="rgba(255,220,150,.5)"/>
+          <rect x="314" y="7" width="34" height="10" rx="2" fill="#d4a843"/>
+          <text x="331" y="14" text-anchor="middle" font-family="Georgia,serif" font-size="6" fill="#fff">Reserve</text>
+          <rect x="0" y="24" width="360" height="90" fill="#d4956a"/>
+          <defs><linearGradient id="rg2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#1a0a00" stop-opacity=".1"/><stop offset="100%" stop-color="#1a0a00" stop-opacity=".55"/></linearGradient></defs>
+          <rect x="0" y="24" width="360" height="90" fill="url(#rg2)"/>
+          <text x="180" y="68" text-anchor="middle" font-family="Georgia,serif" font-size="18" font-weight="700" fill="#fff">Fine Dining &amp; More</text>
+          <text x="180" y="86" text-anchor="middle" font-family="Georgia,serif" font-size="9" fill="rgba(255,220,150,.9)">Authentic Cuisine · Erode</text>
+          <rect x="130" y="96" width="100" height="14" rx="2" fill="#8b4513"/>
+          <text x="180" y="106" text-anchor="middle" font-family="Georgia,serif" font-size="7" fill="#ffd896">View Our Menu</text>
+          <rect x="14" y="128" width="100" height="70" rx="2" fill="#fff" opacity=".75"/>
+          <rect x="14" y="128" width="100" height="28" rx="2" fill="#d4956a" opacity=".55"/>
+          <text x="64" y="147" text-anchor="middle" font-family="Georgia,serif" font-size="8" fill="#5a2a00">Starters</text>
+          <rect x="20" y="162" width="75" height="5" rx="1" fill="#d4956a" opacity=".5"/>
+          <rect x="20" y="171" width="65" height="5" rx="1" fill="#d4956a" opacity=".4"/>
+          <rect x="20" y="180" width="70" height="5" rx="1" fill="#d4956a" opacity=".4"/>
+          <rect x="130" y="128" width="100" height="70" rx="2" fill="#fff" opacity=".75"/>
+          <rect x="130" y="128" width="100" height="28" rx="2" fill="#d4956a" opacity=".55"/>
+          <text x="180" y="147" text-anchor="middle" font-family="Georgia,serif" font-size="8" fill="#5a2a00">Main Course</text>
+          <rect x="136" y="162" width="75" height="5" rx="1" fill="#d4956a" opacity=".5"/>
+          <rect x="136" y="171" width="65" height="5" rx="1" fill="#d4956a" opacity=".4"/>
+          <rect x="136" y="180" width="70" height="5" rx="1" fill="#d4956a" opacity=".4"/>
+          <rect x="246" y="128" width="100" height="70" rx="2" fill="#fff" opacity=".75"/>
+          <rect x="246" y="128" width="100" height="28" rx="2" fill="#d4956a" opacity=".55"/>
+          <text x="296" y="147" text-anchor="middle" font-family="Georgia,serif" font-size="8" fill="#5a2a00">Desserts</text>
+          <rect x="252" y="162" width="75" height="5" rx="1" fill="#d4956a" opacity=".5"/>
+          <rect x="252" y="171" width="65" height="5" rx="1" fill="#d4956a" opacity=".4"/>
+          <rect x="252" y="180" width="70" height="5" rx="1" fill="#d4956a" opacity=".4"/>
+          <rect x="0" y="215" width="360" height="40" fill="#8b4513" opacity=".12"/>
+          <rect x="14" y="222" width="100" height="6" rx="2" fill="#8b4513" opacity=".3"/>
+          <rect x="14" y="232" width="200" height="5" rx="2" fill="#8b4513" opacity=".2"/>
+          <rect x="0" y="258" width="360" height="22" fill="#8b4513" opacity=".35"/>
+        </svg>
+      </div>
+    </div>
+    <div class="cs-content">
+      <span class="cs-tag">Food &amp; Restaurant</span>
+      <h2 class="cs-headline">Restaurant Website</h2>
+      <p class="cs-deck">A Erode restaurant was losing customers to a competitor who had a polished website. They needed a site that showcased their menu, made reservations easy, and could be found on Google when people searched "restaurant Erode". We delivered a warm, inviting site with a full digital menu, a Google Maps integration, and a WhatsApp reservation button — all in three days.</p>
+      <div class="cs-meta">
+        <div class="cs-meta-item"><span>Package</span><strong>Business — ₹9,000</strong></div>
+        <div class="cs-meta-item"><span>Delivery</span><strong>3 Days</strong></div>
+        <div class="cs-meta-item"><span>Industry</span><strong>Food &amp; Dining</strong></div>
+        <div class="cs-meta-item"><span>Key Feature</span><strong>Digital Menu</strong></div>
+      </div>
+      <div class="cs-chips"><span class="cs-chip">Digital Menu</span><span class="cs-chip">Google Maps</span><span class="cs-chip">WhatsApp CTA</span><span class="cs-chip">Gallery</span></div>
+      <div class="cs-result"><span class="cs-result-label">Client Result</span><p class="cs-result-text">"Table bookings doubled in our first month with the website."</p></div>
+    </div>
+  </div>
+
+  <!-- Case Study 3: Adventure -->
+  <div class="case-study reveal">
+    <div class="cs-preview">
+      <div class="cs-preview-inner" style="background:linear-gradient(135deg,#e0f0e8,#b0d8c0)">
+        <svg viewBox="0 0 360 280" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%">
+          <rect width="360" height="280" fill="#e0f0e8"/>
+          <rect x="0" y="24" width="360" height="90" fill="#a8d8c0"/>
+          <polygon points="0,114 70,50 140,114" fill="#4a7a5a" opacity=".8"/>
+          <polygon points="80,114 170,35 260,114" fill="#5a8a6a" opacity=".9"/>
+          <polygon points="180,114 270,52 360,114" fill="#3a6a4a" opacity=".8"/>
+          <rect x="0" y="111" width="360" height="3" fill="#2a5a3a" opacity=".5"/>
+          <rect x="0" y="0" width="360" height="24" fill="#2a5a3a"/>
+          <rect x="14" y="8" width="70" height="8" rx="2" fill="rgba(200,255,220,.8)"/>
+          <rect x="240" y="8" width="30" height="8" rx="2" fill="rgba(200,255,220,.5)"/>
+          <rect x="276" y="8" width="30" height="8" rx="2" fill="rgba(200,255,220,.5)"/>
+          <rect x="316" y="7" width="32" height="10" rx="2" fill="#5aaa6a"/>
+          <text x="332" y="14" text-anchor="middle" font-family="Georgia,serif" font-size="6" fill="#fff">Explore</text>
+          <text x="180" y="72" text-anchor="middle" font-family="Georgia,serif" font-size="18" font-weight="700" fill="#fff" opacity=".95">Adventure Awaits</text>
+          <text x="180" y="90" text-anchor="middle" font-family="Georgia,serif" font-size="9" fill="rgba(220,255,230,.9)">Trekking · Camping · Packages</text>
+          <rect x="130" y="98" width="100" height="14" rx="2" fill="#2a5a3a"/>
+          <text x="180" y="108" text-anchor="middle" font-family="Georgia,serif" font-size="7" fill="#a8ffb8">Book a Trip</text>
+          <rect x="14" y="125" width="100" height="70" rx="3" fill="#fff" opacity=".82"/>
+          <rect x="14" y="125" width="100" height="24" rx="3" fill="#4a7a5a"/>
+          <text x="64" y="141" text-anchor="middle" font-family="Georgia,serif" font-size="8" fill="#fff">Weekend Trek</text>
+          <text x="64" y="157" text-anchor="middle" font-family="Georgia,serif" font-size="10" font-weight="700" fill="#2a5a3a">₹3,500</text>
+          <rect x="20" y="168" width="70" height="5" rx="1" fill="#a8d8c0" opacity=".8"/>
+          <rect x="20" y="177" width="56" height="5" rx="1" fill="#a8d8c0" opacity=".6"/>
+          <rect x="20" y="186" width="60" height="8" rx="2" fill="#4a7a5a" opacity=".7"/>
+          <rect x="130" y="125" width="100" height="70" rx="3" fill="#fff" opacity=".82"/>
+          <rect x="130" y="125" width="100" height="24" rx="3" fill="#2a5a3a"/>
+          <text x="180" y="141" text-anchor="middle" font-family="Georgia,serif" font-size="8" fill="#fff">Camp Package</text>
+          <text x="180" y="157" text-anchor="middle" font-family="Georgia,serif" font-size="10" font-weight="700" fill="#2a5a3a">₹6,000</text>
+          <rect x="136" y="168" width="70" height="5" rx="1" fill="#a8d8c0" opacity=".8"/>
+          <rect x="136" y="177" width="56" height="5" rx="1" fill="#a8d8c0" opacity=".6"/>
+          <rect x="136" y="186" width="60" height="8" rx="2" fill="#2a5a3a" opacity=".7"/>
+          <rect x="246" y="125" width="100" height="70" rx="3" fill="#fff" opacity=".82"/>
+          <rect x="246" y="125" width="100" height="24" rx="3" fill="#4a7a5a"/>
+          <text x="296" y="141" text-anchor="middle" font-family="Georgia,serif" font-size="8" fill="#fff">Group Expedition</text>
+          <text x="296" y="157" text-anchor="middle" font-family="Georgia,serif" font-size="10" font-weight="700" fill="#2a5a3a">₹9,500</text>
+          <rect x="252" y="168" width="70" height="5" rx="1" fill="#a8d8c0" opacity=".8"/>
+          <rect x="252" y="177" width="56" height="5" rx="1" fill="#a8d8c0" opacity=".6"/>
+          <rect x="252" y="186" width="60" height="8" rx="2" fill="#4a7a5a" opacity=".7"/>
+          <rect x="0" y="210" width="360" height="45" fill="#2a5a3a" opacity=".08"/>
+          <rect x="0" y="258" width="360" height="22" fill="#2a5a3a" opacity=".3"/>
+        </svg>
+      </div>
+    </div>
+    <div class="cs-content">
+      <span class="cs-tag">Travel &amp; Adventure</span>
+      <h2 class="cs-headline">Adventure Trip Landing Page</h2>
+      <p class="cs-deck">A small adventure travel operator in Tamil Nadu was selling trekking and camping packages entirely through WhatsApp referrals. They needed a landing page that could showcase their packages, build credibility with photos, and make it simple for customers to enquire and book. We built a bold, immersive landing page with package cards, a photo gallery, and a WhatsApp booking CTA.</p>
+      <div class="cs-meta">
+        <div class="cs-meta-item"><span>Package</span><strong>Starter — ₹5,000</strong></div>
+        <div class="cs-meta-item"><span>Delivery</span><strong>2 Days</strong></div>
+        <div class="cs-meta-item"><span>Industry</span><strong>Travel &amp; Adventure</strong></div>
+        <div class="cs-meta-item"><span>Key Feature</span><strong>Package Cards</strong></div>
+      </div>
+      <div class="cs-chips"><span class="cs-chip">Landing Page</span><span class="cs-chip">Package Cards</span><span class="cs-chip">Booking CTA</span><span class="cs-chip">Responsive</span></div>
+      <div class="cs-result"><span class="cs-result-label">Client Result</span><p class="cs-result-text">"Our first week online brought 22 WhatsApp enquiries from Google."</p></div>
+    </div>
+  </div>
+
+  <!-- Case Study 4: Gym -->
+  <div class="case-study reveal">
+    <div class="cs-preview">
+      <div class="cs-preview-inner" style="background:linear-gradient(135deg,#1a0a0a,#3d0f0f)">
+        <svg viewBox="0 0 360 280" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%">
+          <rect width="360" height="280" fill="#1a0a0a"/>
+          <rect x="0" y="0" width="360" height="24" fill="#0a0505"/>
+          <rect x="14" y="8" width="75" height="8" rx="2" fill="rgba(255,80,80,.8)"/>
+          <rect x="240" y="8" width="30" height="8" rx="2" fill="rgba(255,255,255,.3)"/>
+          <rect x="276" y="8" width="30" height="8" rx="2" fill="rgba(255,255,255,.3)"/>
+          <rect x="314" y="7" width="34" height="10" rx="2" fill="#cc2222"/>
+          <text x="331" y="14" text-anchor="middle" font-family="Georgia,serif" font-size="6" fill="#fff">Join Now</text>
+          <rect x="0" y="24" width="360" height="90" fill="#2a0a0a"/>
+          <line x1="0" y1="24" x2="55" y2="114" stroke="#cc2222" stroke-width="1.5" opacity=".3"/>
+          <line x1="40" y1="24" x2="95" y2="114" stroke="#cc2222" stroke-width="1" opacity=".2"/>
+          <line x1="305" y1="24" x2="360" y2="80" stroke="#cc2222" stroke-width="1" opacity=".2"/>
+          <text x="180" y="65" text-anchor="middle" font-family="Georgia,serif" font-size="20" font-weight="700" fill="#fff">PowerHouse Gym</text>
+          <text x="180" y="85" text-anchor="middle" font-family="Georgia,serif" font-size="9" fill="#ff8080" opacity=".9">Train Hard · Live Strong · Erode</text>
+          <rect x="125" y="95" width="110" height="14" rx="2" fill="#cc2222"/>
+          <text x="180" y="105" text-anchor="middle" font-family="Georgia,serif" font-size="7" fill="#fff">Get Membership</text>
+          <rect x="14" y="128" width="100" height="78" rx="2" fill="#2a0a0a" stroke="#cc2222" stroke-width="1.5"/>
+          <text x="64" y="148" text-anchor="middle" font-family="Georgia,serif" font-size="8" font-weight="700" fill="#ff8080">BASIC</text>
+          <text x="64" y="166" text-anchor="middle" font-family="Georgia,serif" font-size="14" font-weight="700" fill="#fff">₹999</text>
+          <text x="64" y="178" text-anchor="middle" font-family="Georgia,serif" font-size="6" fill="rgba(255,255,255,.5)">/month</text>
+          <rect x="26" y="188" width="65" height="8" rx="2" fill="#cc2222" opacity=".7"/>
+          <rect x="130" y="128" width="100" height="78" rx="2" fill="#cc2222"/>
+          <text x="180" y="148" text-anchor="middle" font-family="Georgia,serif" font-size="8" font-weight="700" fill="#fff">PREMIUM</text>
+          <text x="180" y="166" text-anchor="middle" font-family="Georgia,serif" font-size="14" font-weight="700" fill="#fff">₹1,799</text>
+          <text x="180" y="178" text-anchor="middle" font-family="Georgia,serif" font-size="6" fill="rgba(255,255,255,.7)">/month</text>
+          <rect x="142" y="188" width="65" height="8" rx="2" fill="#fff" opacity=".9"/>
+          <rect x="246" y="128" width="100" height="78" rx="2" fill="#2a0a0a" stroke="#cc2222" stroke-width="1.5"/>
+          <text x="296" y="148" text-anchor="middle" font-family="Georgia,serif" font-size="8" font-weight="700" fill="#ff8080">ANNUAL</text>
+          <text x="296" y="166" text-anchor="middle" font-family="Georgia,serif" font-size="14" font-weight="700" fill="#fff">₹9,999</text>
+          <text x="296" y="178" text-anchor="middle" font-family="Georgia,serif" font-size="6" fill="rgba(255,255,255,.5)">/year</text>
+          <rect x="258" y="188" width="65" height="8" rx="2" fill="#cc2222" opacity=".7"/>
+          <rect x="0" y="222" width="360" height="36" fill="#1a0505" opacity=".6"/>
+          <rect x="14" y="230" width="100" height="6" rx="2" fill="#cc2222" opacity=".3"/>
+          <rect x="14" y="240" width="200" height="5" rx="2" fill="rgba(255,255,255,.1)"/>
+          <rect x="0" y="260" width="360" height="20" fill="#0a0505"/>
+          <rect x="140" y="266" width="80" height="3" rx="1" fill="#cc2222" opacity=".4"/>
+        </svg>
+      </div>
+    </div>
+    <div class="cs-content">
+      <span class="cs-tag">Fitness &amp; Gym</span>
+      <h2 class="cs-headline">Gym &amp; Fitness Website</h2>
+      <p class="cs-deck">A local gym was relying entirely on walk-in traffic and word-of-mouth referrals. They wanted a bold, energetic website to showcase their membership plans, class timetables, and trainer profiles — and rank on Google when people searched for gyms in Erode. We delivered a full five-page website with a dark, powerful aesthetic, animated membership cards, and a class schedule that they could update via WhatsApp.</p>
+      <div class="cs-meta">
+        <div class="cs-meta-item"><span>Package</span><strong>Pro — ₹13,000</strong></div>
+        <div class="cs-meta-item"><span>Delivery</span><strong>6 Days</strong></div>
+        <div class="cs-meta-item"><span>Industry</span><strong>Fitness &amp; Gym</strong></div>
+        <div class="cs-meta-item"><span>Key Feature</span><strong>Membership Plans</strong></div>
+      </div>
+      <div class="cs-chips"><span class="cs-chip">Membership</span><span class="cs-chip">Class Schedules</span><span class="cs-chip">Trainer Profiles</span><span class="cs-chip">Gallery</span></div>
+      <div class="cs-result"><span class="cs-result-label">Client Result</span><p class="cs-result-text">"30 new memberships signed in the first month after launch."</p></div>
+    </div>
+  </div>
+
+  <!-- MINI GRID: additional work -->
+  <div class="section-masthead reveal"><span class="section-kicker">— More Work —</span><h2 class="section-title">More Projects We've <em>Delivered</em></h2></div>
+  <div class="mini-grid reveal">
+    <div class="mini-card">
+      <div class="mini-preview" style="background:linear-gradient(135deg,#e8f0ff,#c0d0f5);display:flex;align-items:center;justify-content:center">
+        <svg viewBox="0 0 180 120" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%"><rect width="180" height="120" fill="#e8f0ff"/><rect x="0" y="0" width="180" height="16" fill="#3a5acc"/><rect x="10" y="5" width="40" height="6" rx="2" fill="rgba(255,255,255,.7)"/><rect x="0" y="16" width="180" height="55" fill="#c0d0f5"/><text x="90" y="48" text-anchor="middle" font-family="Georgia,serif" font-size="11" font-weight="700" fill="#1a2a6a" opacity=".8">Medical Clinic</text><rect x="50" y="55" width="80" height="10" rx="4" fill="#3a5acc"/><rect x="10" y="78" width="50" height="30" rx="2" fill="#fff" opacity=".7"/><rect x="70" y="78" width="50" height="30" rx="2" fill="#fff" opacity=".7"/><rect x="130" y="78" width="40" height="30" rx="2" fill="#fff" opacity=".7"/></svg>
+      </div>
+      <span class="mini-tag">Healthcare</span>
+      <h3 class="mini-headline">Medical Clinic Website</h3>
+      <p class="mini-body">Doctor profile, appointment form, and Google Maps. Patients book online in under 30 seconds.</p>
+    </div>
+    <div class="mini-card">
+      <div class="mini-preview" style="background:linear-gradient(135deg,#fff5e0,#f5d580);display:flex;align-items:center;justify-content:center">
+        <svg viewBox="0 0 180 120" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%"><rect width="180" height="120" fill="#fff5e0"/><rect x="0" y="0" width="180" height="16" fill="#b8892a"/><rect x="10" y="5" width="40" height="6" rx="2" fill="rgba(255,255,255,.7)"/><rect x="0" y="16" width="180" height="55" fill="#f5d580"/><text x="90" y="48" text-anchor="middle" font-family="Georgia,serif" font-size="11" font-weight="700" fill="#5a3a00" opacity=".8">Jewellery Store</text><rect x="50" y="55" width="80" height="10" rx="4" fill="#b8892a"/><rect x="10" y="78" width="50" height="30" rx="2" fill="#fff" opacity=".7"/><rect x="70" y="78" width="50" height="30" rx="2" fill="#fff" opacity=".7"/><rect x="130" y="78" width="40" height="30" rx="2" fill="#fff" opacity=".7"/></svg>
+      </div>
+      <span class="mini-tag">Retail</span>
+      <h3 class="mini-headline">Jewellery Store</h3>
+      <p class="mini-body">Elegant product gallery, WhatsApp ordering, and a lookbook section for new arrivals.</p>
+    </div>
+    <div class="mini-card">
+      <div class="mini-preview" style="background:linear-gradient(135deg,#e8fff0,#a0ddb8);display:flex;align-items:center;justify-content:center">
+        <svg viewBox="0 0 180 120" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%"><rect width="180" height="120" fill="#e8fff0"/><rect x="0" y="0" width="180" height="16" fill="#2a7a4a"/><rect x="10" y="5" width="40" height="6" rx="2" fill="rgba(255,255,255,.7)"/><rect x="0" y="16" width="180" height="55" fill="#a0ddb8"/><text x="90" y="48" text-anchor="middle" font-family="Georgia,serif" font-size="10" font-weight="700" fill="#1a4a2a" opacity=".8">Organic Farm Shop</text><rect x="50" y="55" width="80" height="10" rx="4" fill="#2a7a4a"/><rect x="10" y="78" width="50" height="30" rx="2" fill="#fff" opacity=".7"/><rect x="70" y="78" width="50" height="30" rx="2" fill="#fff" opacity=".7"/><rect x="130" y="78" width="40" height="30" rx="2" fill="#fff" opacity=".7"/></svg>
+      </div>
+      <span class="mini-tag">Agriculture</span>
+      <h3 class="mini-headline">Organic Farm Shop</h3>
+      <p class="mini-body">Seasonal product listings, farm story, and a direct-to-consumer WhatsApp order system.</p>
+    </div>
+  </div>
+
+  <div style="text-align:center;margin-bottom:3rem">
+    <div class="pull-quote" style="max-width:560px;margin:0 auto 1.5rem"><p>"Every project is unique. We listen to your business, understand your customers, and build something that actually works — not just something that looks good."</p><cite>— CodeCraft Solutions</cite></div>
+  </div>
+</main>
+
+<div class="portfolio-cta">
+  <h2>Want a Website<br><em>Like These?</em></h2>
+  <p>Tell us about your business. We'll build something just as effective — usually within 3 days.</p>
+  <div class="portfolio-cta-btns">
+    <a href="contact.html" class="btn-primary">✦ Get a Free Quote</a>
+    <a href="packages.html" class="btn-ghost-light">View Pricing →</a>
+  </div>
+</div>
+<footer>
+  <div class="footer-inner">
+    <a href="index.html" class="footer-logo">CodeCraft<span>Solutions</span></a>
+    <p class="footer-copy">© 2025 <strong>CodeCraft Solutions</strong> · Built with ❤️ for Tamil Nadu businesses · Erode, India</p>
+    <div class="footer-links">
+      <a href="index.html">Home</a><a href="services.html">Services</a>
+      <a href="packages.html">Packages</a><a href="portfolio.html" class="active">Portfolio</a><a href="contact.html">Contact</a>
+    </div>
+  </div>
+</footer>
+<script src="main.js"></script>
+</body></html>

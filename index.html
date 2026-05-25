@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CodeCraft Solutions — The Web Dispatch</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,700&family=UnifrakturMaguntia&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+/* ── INDEX-ONLY STYLES ── */
+#hero{position:relative;z-index:1;padding:2rem 4% 3rem;border-bottom:3px double var(--ink);}
+.edition-bar{display:flex;align-items:center;gap:1.5rem;font-size:.7rem;font-family:var(--serif-body);text-transform:uppercase;letter-spacing:.12em;color:var(--ink-light);margin-bottom:1.5rem;padding-bottom:.7rem;border-bottom:1px solid var(--rule-thin);}
+.edition-bar .ed-tag{background:var(--red);color:#fff;padding:.15rem .65rem;font-weight:700;font-size:.68rem;letter-spacing:.1em;}
+.front-page{display:grid;grid-template-columns:1fr 2px 2.2fr 2px 1fr;gap:0 1.6rem;align-items:start;}
+.col-rule{width:1px;background:var(--rule-thin);align-self:stretch;margin:0 .2rem;}
+.hero-sidebar-left{padding-right:.8rem;border-right:1px solid var(--rule-thin);}
+.hero-sidebar-right{padding-left:.8rem;border-left:1px solid var(--rule-thin);}
+.sidebar-brief{margin-bottom:1.5rem;padding-bottom:1.5rem;border-bottom:1px solid var(--rule-thin);}
+.brief-kicker{font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:var(--red);display:block;margin-bottom:.4rem;}
+.brief-headline{font-family:var(--serif-display);font-size:.95rem;font-weight:700;line-height:1.25;margin-bottom:.5rem;}
+.brief-body{font-size:.78rem;color:var(--ink-mid);line-height:1.7;}
+.hero-main{padding:0 1.2rem;text-align:center;}
+.hero-kicker{display:inline-block;background:var(--red);color:#fff;font-family:var(--serif-body);font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.14em;padding:.2rem 1rem;margin-bottom:1rem;}
+.hero-headline{font-family:var(--serif-display);font-size:clamp(2.4rem,5.5vw,4.4rem);font-weight:900;line-height:1.0;letter-spacing:-.02em;color:var(--ink);margin-bottom:.7rem;}
+.hero-headline em{font-style:italic;color:var(--red);}
+.hero-deck{font-family:var(--serif-body);font-size:.98rem;font-style:italic;color:var(--ink-mid);line-height:1.7;margin-bottom:1.2rem;max-width:480px;margin-left:auto;margin-right:auto;}
+.hero-rule{display:flex;align-items:center;gap:.6rem;justify-content:center;margin:1rem 0;}
+.hero-rule span{flex:1;height:1px;background:var(--ink);}
+.hero-rule-ornament{font-family:var(--serif-display);font-size:1.1rem;color:var(--red);}
+.hero-columns{column-count:3;column-gap:1.4rem;column-rule:1px solid var(--rule-thin);font-size:.82rem;line-height:1.85;color:var(--ink-mid);text-align:justify;margin:1rem 0;hyphens:auto;}
+.hero-columns::first-letter{font-family:var(--serif-display);font-size:3.5rem;font-weight:900;color:var(--red);float:left;line-height:.8;margin:.05em .12em 0 0;}
+.hero-byline{font-size:.72rem;text-transform:uppercase;letter-spacing:.1em;color:var(--ink-light);margin-top:.8rem;}
+.hero-broadside{margin:1.2rem 0;background:var(--ink);color:var(--cream);padding:1.4rem 1.6rem;position:relative;overflow:hidden;}
+.hero-broadside::before{content:'';position:absolute;inset:6px;border:1px solid rgba(245,240,232,.15);pointer-events:none;}
+.broadside-title{font-family:var(--serif-display);font-size:1rem;font-weight:700;text-align:center;text-transform:uppercase;letter-spacing:.12em;color:var(--gold-light);margin-bottom:.8rem;border-bottom:1px solid rgba(245,240,232,.2);padding-bottom:.5rem;}
+.broadside-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:.5rem;}
+.bstat{text-align:center;padding:.6rem .3rem;border-right:1px solid rgba(245,240,232,.12);}
+.bstat:last-child{border-right:none;}
+.bstat-num{font-family:var(--serif-display);font-size:1.7rem;font-weight:900;color:var(--gold-light);line-height:1;display:block;}
+.bstat-label{font-size:.65rem;text-transform:uppercase;letter-spacing:.1em;color:rgba(245,240,232,.6);margin-top:.2rem;display:block;}
+.hero-btns{display:flex;gap:.8rem;justify-content:center;flex-wrap:wrap;margin-top:1.2rem;}
+/* HOME SERVICES STRIP */
+.services-strip{padding:3rem 4%;background:var(--cream);border-bottom:3px double var(--ink);position:relative;z-index:1;}
+.strip-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;}
+.strip-card{padding:1.5rem;border-right:1px solid var(--rule-thin);position:relative;transition:background .2s;}
+.strip-card:last-child{border-right:none;}
+.strip-card:nth-child(4),.strip-card:nth-child(5),.strip-card:nth-child(6){border-top:1px solid var(--rule-thin);}
+.strip-card:hover{background:rgba(192,57,43,.04);}
+.strip-num{font-family:var(--serif-display);font-size:3rem;font-weight:900;color:rgba(192,57,43,.1);line-height:1;position:absolute;top:.8rem;right:1rem;}
+.strip-kicker{font-size:.63rem;font-weight:700;text-transform:uppercase;letter-spacing:.15em;color:var(--red);margin-bottom:.3rem;display:block;}
+.strip-headline{font-family:var(--serif-display);font-size:1.1rem;font-weight:700;line-height:1.2;margin-bottom:.5rem;}
+.strip-body{font-size:.8rem;color:var(--ink-mid);line-height:1.8;}
+/* HOME PORTFOLIO TEASE */
+.portfolio-tease{padding:3rem 4%;background:var(--cream-dark);border-bottom:3px double var(--ink);position:relative;z-index:1;}
+.tease-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:0;border:1px solid var(--ink);}
+.tease-card{padding:1.6rem;border-right:1px solid var(--ink);border-bottom:1px solid var(--ink);transition:background .2s;}
+.tease-card:nth-child(even){border-right:none;}
+.tease-card:nth-last-child(-n+2){border-bottom:none;}
+.tease-card:hover{background:rgba(192,57,43,.04);}
+.port-tag{font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.15em;color:var(--red);margin-bottom:.4rem;display:block;}
+.port-headline{font-family:var(--serif-display);font-size:1.05rem;font-weight:700;line-height:1.2;margin-bottom:.5rem;}
+.port-body{font-size:.78rem;color:var(--ink-mid);line-height:1.7;}
+.port-chips{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.8rem;}
+.port-chip{font-size:.65rem;text-transform:uppercase;letter-spacing:.1em;font-weight:700;color:var(--ink);padding:.18rem .6rem;border:1px solid var(--ink);}
+/* HOME CTA BAND */
+.cta-band{padding:3.5rem 4%;background:var(--ink);text-align:center;border-bottom:3px double var(--red);position:relative;z-index:1;}
+.cta-band h2{font-family:var(--serif-display);font-size:clamp(1.8rem,4vw,3rem);font-weight:900;color:var(--cream);margin-bottom:.8rem;}
+.cta-band h2 em{color:var(--red-light);font-style:italic;}
+.cta-band p{font-style:italic;color:rgba(245,240,232,.6);font-size:.92rem;margin-bottom:1.8rem;max-width:480px;margin-left:auto;margin-right:auto;}
+.cta-band-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;}
+/* RESPONSIVE */
+@media(max-width:900px){
+  .front-page{grid-template-columns:1fr;}.col-rule{display:none;}
+  .hero-sidebar-left,.hero-sidebar-right{border:none;padding:0;}
+  .hero-sidebar-left{border-bottom:1px solid var(--rule-thin);padding-bottom:1.5rem;margin-bottom:1.5rem;}
+  .hero-sidebar-right{border-top:1px solid var(--rule-thin);padding-top:1.5rem;margin-top:1rem;}
+  .hero-columns{column-count:2;}.broadside-stats{grid-template-columns:repeat(2,1fr);}
+  .strip-grid{grid-template-columns:1fr;}.strip-card{border-right:none;border-bottom:1px solid var(--rule-thin);}
+  .strip-card:nth-child(4),.strip-card:nth-child(5),.strip-card:nth-child(6){border-top:none;}
+  .tease-grid{grid-template-columns:1fr;}.tease-card{border-right:none;}
+  .tease-card:nth-last-child(-n+2){border-bottom:1px solid var(--ink);}.tease-card:last-child{border-bottom:none;}
+}
+@media(max-width:600px){.hero-columns{column-count:1;}}
+</style>
+</head>
+<body>
+<div id="progress"></div>
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-close" id="mobileClose">✕</button>
+  <a href="index.html">Home</a>
+  <a href="services.html">Services</a>
+  <a href="packages.html">Packages</a>
+  <a href="portfolio.html">Portfolio</a>
+  <a href="contact.html">Contact</a>
+</div>
+
+<header class="masthead">
+  <div class="masthead-top">
+    <span>Est. 2024 · Erode, Tamil Nadu</span>
+    <span><a href="mailto:codecraftsolutionerode@gmail.com">codecraftsolutionerode@gmail.com</a></span>
+    <span>Vol. I · Digital Edition</span>
+  </div>
+  <a href="index.html" class="masthead-logo">CodeCraft<span>Solutions</span></a>
+  <div class="masthead-tagline">"All the Web Fit to Build" — Modern Websites for Tamil Nadu Businesses</div>
+  <div class="masthead-rule"></div>
+  <nav class="masthead-nav">
+    <a href="services.html">Services</a>
+    <a href="packages.html">Packages</a>
+    <a href="portfolio.html">Portfolio</a>
+    <a href="contact.html">Contact</a>
+    <a href="contact.html" class="nav-cta">✦ Free Demo</a>
+  </nav>
+</header>
+
+<nav class="sticky-nav">
+  <a href="index.html" class="sticky-nav-logo">CodeCraft<span>Solutions</span></a>
+  <ul class="sticky-nav-links">
+    <li><a href="services.html">Services</a></li>
+    <li><a href="packages.html">Packages</a></li>
+    <li><a href="portfolio.html">Portfolio</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <a href="contact.html" class="sticky-btn">Free Demo</a>
+  <button class="nav-burger" onclick="openMobile()"><span></span><span></span><span></span></button>
+</nav>
+
+<div class="ticker-wrap">
+  <span class="ticker-label">BREAKING</span>
+  <div class="ticker-inner" style="padding-left:140px">
+    <span>Starter websites from just ₹5,000</span><span>100% mobile-friendly builds, every time</span>
+    <span>Average delivery in 3 days</span><span>WhatsApp quotes within 2 hours</span>
+    <span>Serving restaurants, salons, gyms &amp; more across Erode</span>
+    <span>Free domain for 1 year on all packages</span><span>5.0 ★ client satisfaction rating</span>
+  </div>
+</div>
+
+<section id="hero">
+  <div class="edition-bar">
+    <span class="ed-tag">SPECIAL EDITION</span>
+    <span>Web Solutions · Digital Commerce · Online Presence</span>
+    <span style="margin-left:auto">Erode &amp; Tamil Nadu · Since 2024</span>
+  </div>
+  <div class="front-page">
+    <aside class="hero-sidebar-left reveal-left">
+      <div class="sidebar-brief">
+        <span class="brief-kicker">Local Business</span>
+        <h3 class="brief-headline">Erode Businesses Find New Customers Online</h3>
+        <p class="brief-body">Local entrepreneurs are turning to affordable, fast-built websites to compete in the digital marketplace — seeing real results within weeks of launch.</p>
+      </div>
+      <div class="sidebar-brief">
+        <span class="brief-kicker">Technology</span>
+        <h3 class="brief-headline">Mobile-First Sites Drive 3× More Enquiries</h3>
+        <p class="brief-body">Businesses with mobile-optimised sites see dramatically higher WhatsApp and call enquiry rates from Google searches on smartphones.</p>
+      </div>
+      <div class="classifieds">
+        <div class="classified-heading">Dispatch</div>
+        <div class="classified-item"><strong>3 Days</strong><br>Average delivery from order to launch, including revisions.</div>
+        <div class="classified-item"><strong>Free Quote</strong><br>Send a WhatsApp message. Get a detailed quote same day.</div>
+        <div class="classified-item"><strong>All Industries</strong><br>Restaurants, salons, gyms, retail, clinics, and more.</div>
+      </div>
+    </aside>
+    <div class="col-rule"></div>
+    <article class="hero-main reveal">
+      <span class="hero-kicker">⚡ Web Development · Digital Solutions · Erode</span>
+      <h1 class="hero-headline">Your Business<br>Deserves a<br><em>Modern Website</em></h1>
+      <div class="hero-rule"><span></span><span class="hero-rule-ornament">❧</span><span></span></div>
+      <p class="hero-deck">Fast, beautiful, mobile-friendly websites for restaurants, salons, gyms, and local businesses — crafted to bring you more customers, more orders, and more growth.</p>
+      <div class="hero-columns">In today's market, a business without a website is invisible to an entire generation of customers. Every day, thousands of Tamil Nadu residents search Google for local services — restaurants, salons, gyms, clinics — and click only on businesses that appear polished and professional online. CodeCraft Solutions was founded in Erode to solve this exact problem for local businesses. We build fast, conversion-focused websites that look stunning on every device and are engineered to rank on Google from day one. Our process is simple: you tell us about your business, we design and build your site, and you're live within three days. No technical knowledge required. No complex contracts. Just a website that works as hard as you do.</div>
+      <p class="hero-byline">— By CodeCraft Solutions Editorial Desk · Erode, Tamil Nadu</p>
+      <div class="hero-broadside">
+        <div class="broadside-title">◆ By The Numbers ◆</div>
+        <div class="broadside-stats">
+          <div class="bstat"><span class="bstat-num" data-count="10">0+</span><span class="bstat-label">Projects Delivered</span></div>
+          <div class="bstat"><span class="bstat-num">100%</span><span class="bstat-label">Mobile Friendly</span></div>
+          <div class="bstat"><span class="bstat-num">3 Days</span><span class="bstat-label">Avg Turnaround</span></div>
+          <div class="bstat"><span class="bstat-num">⭐ 5.0</span><span class="bstat-label">Client Rating</span></div>
+        </div>
+      </div>
+      <div class="hero-btns">
+        <a href="contact.html" class="btn-primary">✦ Get Your Free Demo</a>
+        <a href="portfolio.html" class="btn-ghost">See Our Work →</a>
+      </div>
+    </article>
+    <div class="col-rule"></div>
+    <aside class="hero-sidebar-right reveal-right">
+      <div class="pull-quote">
+        <p>"We went from zero online presence to 40 customer enquiries in the first week."</p>
+        <cite>— Sri Krishna Hotel, Erode</cite>
+      </div>
+      <div class="sidebar-brief" style="margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid var(--rule-thin)">
+        <span class="brief-kicker">In This Edition</span>
+        <div class="leader" style="margin:.4rem 0;font-size:.78rem"><span>Services Offered</span><span class="leader-dots"></span><span><a href="services.html" style="color:var(--red);font-weight:700">P.2</a></span></div>
+        <div class="leader" style="margin:.4rem 0;font-size:.78rem"><span>Package Pricing</span><span class="leader-dots"></span><span><a href="packages.html" style="color:var(--red);font-weight:700">P.3</a></span></div>
+        <div class="leader" style="margin:.4rem 0;font-size:.78rem"><span>Portfolio</span><span class="leader-dots"></span><span><a href="portfolio.html" style="color:var(--red);font-weight:700">P.4</a></span></div>
+        <div class="leader" style="margin:.4rem 0;font-size:.78rem"><span>Contact &amp; Quote</span><span class="leader-dots"></span><span><a href="contact.html" style="color:var(--red);font-weight:700">P.5</a></span></div>
+      </div>
+      <div class="classifieds" style="margin-top:1.5rem">
+        <div class="classified-heading">Why CodeCraft?</div>
+        <div class="classified-item"><strong>Fast Delivery</strong><br>Sites built &amp; live in 2–7 days.</div>
+        <div class="classified-item"><strong>Local Expertise</strong><br>We understand Erode &amp; Tamil Nadu businesses.</div>
+        <div class="classified-item"><strong>Honest Pricing</strong><br>One-time fee. No hidden charges. Ever.</div>
+        <div class="classified-item"><strong>Real Support</strong><br>WhatsApp us anytime. We actually reply.</div>
+      </div>
+      <div style="text-align:center;margin-top:1.5rem">
+        <a href="https://wa.me/916382639957?text=Hiii%20Code%20Craft%20Solutions" target="_blank" rel="noopener" class="btn-primary" style="font-size:.75rem;padding:.6rem 1.2rem">💬 WhatsApp Us Now</a>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<section class="services-strip">
+  <div class="section-masthead reveal">
+    <span class="section-kicker">— What We Do —</span>
+    <h2 class="section-title">Our <em>Services</em></h2>
+    <p class="section-deck">Everything your business needs to succeed online. <a href="services.html" style="color:var(--red);font-weight:700">Read full services →</a></p>
+  </div>
+  <div class="strip-grid reveal">
+    <div class="strip-card"><span class="strip-num">01</span><span class="strip-kicker">Quick Wins</span><h3 class="strip-headline">Landing Pages</h3><p class="strip-body">High-converting single-page sites. Live in 48 hours.</p></div>
+    <div class="strip-card"><span class="strip-num">02</span><span class="strip-kicker">Core Product</span><h3 class="strip-headline">Business Websites</h3><p class="strip-body">Multi-page sites that build trust and convert visitors.</p></div>
+    <div class="strip-card"><span class="strip-num">03</span><span class="strip-kicker">Commerce</span><h3 class="strip-headline">E-Commerce Stores</h3><p class="strip-body">Online stores with cart &amp; payment integration.</p></div>
+    <div class="strip-card"><span class="strip-num">04</span><span class="strip-kicker">Visibility</span><h3 class="strip-headline">SEO &amp; Rankings</h3><p class="strip-body">Get found on Google. Rank above your competition.</p></div>
+    <div class="strip-card"><span class="strip-num">05</span><span class="strip-kicker">Ongoing</span><h3 class="strip-headline">Maintenance</h3><p class="strip-body">Bug fixes, updates, and changes via WhatsApp support.</p></div>
+    <div class="strip-card"><span class="strip-num">06</span><span class="strip-kicker">Performance</span><h3 class="strip-headline">Speed Optimisation</h3><p class="strip-body">Lightning-fast load times. Better rankings. More sales.</p></div>
+  </div>
+  <div style="text-align:center;margin-top:2rem"><a href="services.html" class="btn-ghost">Read All Services →</a></div>
+</section>
+
+<hr class="section-divider">
+
+<section class="portfolio-tease">
+  <div class="section-masthead reveal">
+    <span class="section-kicker">— Portfolio —</span>
+    <h2 class="section-title">Recent <em>Work</em></h2>
+    <p class="section-deck">A snapshot of what we've built. <a href="portfolio.html" style="color:var(--red);font-weight:700">See full portfolio →</a></p>
+  </div>
+  <div class="tease-grid">
+    <div class="tease-card reveal-left"><span class="port-tag">Beauty &amp; Salon</span><h3 class="port-headline">Luxury Salon Website</h3><p class="port-body">Dark-themed salon site with online booking, service menu, and photo gallery.</p><div class="port-chips"><span class="port-chip">Booking</span><span class="port-chip">Gallery</span></div></div>
+    <div class="tease-card reveal-right"><span class="port-tag">Food &amp; Restaurant</span><h3 class="port-headline">Restaurant Website</h3><p class="port-body">Warm, inviting restaurant site with digital menu and Google Maps.</p><div class="port-chips"><span class="port-chip">Digital Menu</span><span class="port-chip">Maps</span></div></div>
+    <div class="tease-card reveal-left"><span class="port-tag">Travel &amp; Adventure</span><h3 class="port-headline">Adventure Trip Page</h3><p class="port-body">Immersive travel landing page with packages and booking CTA.</p><div class="port-chips"><span class="port-chip">Landing Page</span><span class="port-chip">Booking</span></div></div>
+    <div class="tease-card reveal-right"><span class="port-tag">Fitness &amp; Gym</span><h3 class="port-headline">Gym &amp; Fitness Website</h3><p class="port-body">Bold gym site with membership plans and class schedules.</p><div class="port-chips"><span class="port-chip">Membership</span><span class="port-chip">Schedules</span></div></div>
+  </div>
+  <div style="text-align:center;margin-top:2rem"><a href="portfolio.html" class="btn-ghost">View Full Portfolio →</a></div>
+</section>
+
+<hr class="section-divider">
+
+<div class="cta-band">
+  <h2>Ready to Get Your<br><em>Website Built?</em></h2>
+  <p>Tell us about your business. We'll send you a personalised quote via WhatsApp in under 2 hours.</p>
+  <div class="cta-band-btns">
+    <a href="contact.html" class="btn-primary">✦ Get a Free Quote</a>
+    <a href="packages.html" class="btn-ghost-light">View Pricing →</a>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <a href="index.html" class="footer-logo">CodeCraft<span>Solutions</span></a>
+    <p class="footer-copy">© 2025 <strong>CodeCraft Solutions</strong> · Built with ❤️ for Tamil Nadu businesses · Erode, India</p>
+    <div class="footer-links">
+      <a href="services.html">Services</a><a href="packages.html">Packages</a>
+      <a href="portfolio.html">Portfolio</a><a href="contact.html">Contact</a>
+    </div>
+  </div>
+</footer>
+<script src="main.js"></script>
+</body></html>
